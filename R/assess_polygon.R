@@ -75,7 +75,7 @@ assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl)
                         crs_match =  crs_match,
                         no_points = num_points,
                         dist_from_survey = round(dist, 0),
-                        percent_match_settlement_type = percent_match,
+                        prop_settlement_type = round(percent_match, 2),
                         ornl_overlap = check_overlap,
                         no_sides = num_sides,
                         shp_area = round(area,0),
