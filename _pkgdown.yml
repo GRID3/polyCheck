@@ -1,0 +1,9 @@
+template:
+  params:
+    bootswatch: flatly
+
+authors:
+  Flowminder/Worldpop:
+    href: http://www.flowminder.org/
+
+
