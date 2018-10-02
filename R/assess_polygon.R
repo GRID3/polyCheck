@@ -9,32 +9,32 @@ assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl)
   survey_points$FID <- 0:(nrow(survey_points)-1)
 
   # Load the shapefile
-  shp <- shapefile(x = polygon_path)
+  shp <- raster::shapefile(x = polygon_path)
 
   # Extract the ID from the file name
   id <- extract_id(polygon_path)
 
   # Find matching survey point based on ID
   survey_points_id <- survey_points[survey_points$FID == id,]
-  coords <- coordinates(survey_points_id)
+  coords <- sp::coordinates(survey_points_id)
 
   ## --- Check coordinate System
-  ref <- CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 ")
-  crs_match <- compareCRS(ref, crs(shp))
+  ref <- sp::CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 ")
+  crs_match <- raster::compareCRS(ref, crs(shp))
 
   ## --- Check date formats
-  dig_date <- shp$dig_date %>% strptime(format("%d-%b-%Y"), tz = "GMT")
-  src_date <- shp$SRC_DATE2 %>% strptime(format("%d-%b-%Y"), tz = "GMT")
+  dig_date <- shp$dig_date %>% base::strptime(format("%d-%b-%Y"), tz = "GMT")
+  src_date <- shp$SRC_DATE2 %>% base::strptime(format("%d-%b-%Y"), tz = "GMT")
 
   ## --- Number of Points
-  points <- intersect(settlements, shp)
+  points <- raster::intersect(settlements, shp)
   num_points <- nrow(points)
 
   ## --- Distance between Polygon and Point
   # Data projected from degrees to metres
   crs_m <- "+init=epsg:2062"
-  shp_m <- spTransform(shp, CRS(crs_m))
-  survey_points_id_m <- spTransform(survey_points_id, CRS(crs_m))
+  shp_m <- sp::spTransform(shp, CRS(crs_m))
+  survey_points_id_m <- sp::spTransform(survey_points_id, CRS(crs_m))
   dist <- rgeos::gDistance(spgeom1 = shp_m, survey_points_id_m)
 
   ## --- Type of Land Cover
