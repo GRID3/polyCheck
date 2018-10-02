@@ -2,7 +2,7 @@ Package: polyCheck
 Type: Package
 Title: Verifies delineated polygons for the GRID3 project.
 Version: 0.1.0
-Author: Michael Harper
+Authors@R: Michael Harper
 Maintainer: Michael Harper <michael.harper@flowminder.org>
 Description: Runs a series of automated checks on dealineated polygons for the GRID3
     project.
@@ -10,3 +10,4 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports: raster, sp, geosphere
+RoxygenNote: 6.1.0

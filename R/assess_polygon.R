@@ -1,6 +1,15 @@
 
-# --- Function to assess polygon
-
+#' Assess the geometry of a polygon
+#'
+#' Runs a number of diagnostics on the delineated polygons to check the geometry.
+#'
+#' @param polygon_path the relative file path to the polygon shapefile
+#' @param survey_points Optional. The survey points where the delineation should occur
+#' @param settlement_points Optional. The settlement type points layer
+#' @param ornl Optional. A shapefile of the previously surveyed locations
+#'
+#' @export
+#'
 assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl){
 
   cat("Checking polygon ", polygon_path, "\n")
@@ -21,6 +30,9 @@ assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl)
   ## --- Check coordinate System
   ref <- sp::CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 ")
   crs_match <- raster::compareCRS(ref, crs(shp))
+
+  # Assign correct CRS if not present
+  if(compareCRS(shp, y = NULL)) crs(shp) <- ref
 
   ## --- Check date formats
   dig_date <- shp$dig_date %>% base::strptime(format("%d-%b-%Y"), tz = "GMT")
