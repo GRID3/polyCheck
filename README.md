@@ -1,4 +1,4 @@
-# polyCheck <img src="https://avatars1.githubusercontent.com/u/43346405?s=200&v=4" align="right" />
+# polyCheck <img src="https://avatars1.githubusercontent.com/u/43346405?s=200&v=4" align="right" height="130" width="130" />
 
 [![Travis-CI Build Status](https://travis-ci.org/GRID3/polyCheck.svg?branch=master)](https://travis-ci.org/GRID3/polyCheck)
 
