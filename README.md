@@ -2,7 +2,7 @@
 
 [![Travis-CI Build Status](https://travis-ci.org/GRID3/polyCheck.svg?branch=master)](https://travis-ci.org/GRID3/polyCheck)
 
-The package **polyCheck** provides functions which can be used to validate delineated polygons created as part of the GRID3 project.
+The package **polyCheck** provides functions which can be used to validate delineated polygons created as part of the GRID^3^ project.
 
 To install the package, you can use:
 

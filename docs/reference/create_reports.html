@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract ID from polygon name — extract_id • polyCheck</title>
+<title>Build a diagnostics summary report — create_reports • polyCheck</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Extract ID from polygon name — extract_id" />
+<meta property="og:title" content="Build a diagnostics summary report — create_reports" />
 
-<meta property="og:description" content="For a specified polygon file, extract the three digit ID. It is expected that
- the polygon file has the name format &quot;mh_030_polygon.shp&quot;." />
+<meta property="og:description" content="Will create a summary report for each summary report." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,26 +107,30 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract ID from polygon name</h1>
+    <h1>Build a diagnostics summary report</h1>
     
-    <div class="hidden name"><code>extract_id.Rd</code></div>
+    <div class="hidden name"><code>create_reports.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>For a specified polygon file, extract the three digit ID. It is expected that
- the polygon file has the name format "mh_030_polygon.shp".</p>
+    <p>Will create a summary report for each summary report.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>extract_id</span>(<span class='no'>filepath</span>)</pre>
+    <pre class="usage"><span class='fu'>create_reports</span>(<span class='kw'>polygons</span> <span class='kw'>=</span> <span class='no'>polygonName</span>, <span class='kw'>out_dir</span> <span class='kw'>=</span> <span class='st'>"Reports"</span>,
+  <span class='kw'>input_file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>filepath</th>
-      <td><p>a filepath or file name of a shapefile</p></td>
+      <th>polygons</th>
+      <td><p>the name of the filepath to the polygon</p></td>
+    </tr>
+    <tr>
+      <th>out_dir</th>
+      <td><p>the output directory</p></td>
     </tr>
     </table>
     
@@ -138,6 +141,10 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
                 </ul>
+
+    <h2>Author</h2>
+    
+Michael Harper
 
   </div>
 </div>

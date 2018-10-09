@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Validate the CRS of a shapefile — check_crs" />
 
-<meta property="og:description" content="Validate the CRS of a shapefile" />
+<meta property="og:description" content="Will extract the coordinate reference system from a polygon and check that it matches a specified reference." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -76,6 +76,21 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/Basics.html">Basics of using polyCheck</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -99,19 +114,33 @@
 
     <div class="ref-description">
     
-    <p>Validate the CRS of a shapefile</p>
+    <p>Will extract the coordinate reference system from a polygon and check that it matches a specified reference.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>check_crs</span>(<span class='no'>input</span>,
   <span class='kw'>crs_ref</span> <span class='kw'>=</span> <span class='st'>"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</span>)</pre>
-        
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>crs_ref</th>
+      <td><p>the CRS to be compared against. Defaults to WGS84</p></td>
+    </tr>
+    </table>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
                 </ul>
+
+    <h2>Author</h2>
+    
+Michael Harper
 
   </div>
 </div>

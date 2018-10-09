@@ -3,7 +3,7 @@ Type: Package
 Title: Verifies delineated polygons for the GRID3 project.
 Version: 0.1.0
 Authors@R: person("Michael", "Harper", email = "michael.harper@flowminder.org", role = c("aut", "cre"))
-Maintainer:  Michael Harper <michael.harper@flowminder.org>
+Maintainer: Michael Harper <michael.harper@flowminder.org>
 Description: Runs a series of automated checks on dealineated polygons for the GRID3 project.
 BugReports: https://github.com/GRID3/polyCheck/issues
 License: What license is it under?
@@ -15,3 +15,6 @@ Imports:
     sp,
     geosphere
 RoxygenNote: 6.1.0
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr
