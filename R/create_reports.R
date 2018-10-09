@@ -4,7 +4,6 @@
 #'
 #' @param polygons the name of the filepath to the polygon
 #' @param out_dir the output directory
-#' @param input_file
 #' @author Michael Harper
 #' @export
 #'

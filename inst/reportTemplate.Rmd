@@ -1,7 +1,10 @@
 ---
 params:
-  filepath: "../Kaduna/2_results/mh_005_polygon.shp"
-  root_dir: "../Kaduna"
+  filepath: ".."
+  root_dir: ".."
+  settlement_path: ""
+  survey_points: ""
+  ornl: ""
   reloadData: FALSE
 title: "Validation of Delineated Polygons"
 subtitle: "`r paste('Polygon ID:', basename(params$filepath))`"
@@ -39,16 +42,17 @@ library(rgeos)
 # --- Load Data
 
 # Settlement Seed
-settlements <- file.path(params$root_dir, "1_data/settlement_point/kaduna_settlement_pnts1k_wType.shp") %>%
+settlements <- params$settlement_path %>%
   shapefile()
 
 # Survey Points
-survey_points <-  file.path(params$root_dir, "/1_data/survey_point/kaduna_strat_random_140.shp") %>%
+survey_points <- params$survey_points %>%
   shapefile()
- survey_points$FID <- 0:(nrow(survey_points)-1) # Add FID to object
+
+survey_points$FID <- 0:(nrow(survey_points)-1) # Add FID to object
 
 # load the ORNL data
-ornl <- "../Kaduna/1_data/ornl_microcensus_clusters/mez_0_6_wgs84.shp" %>%
+ornl <- patams$ornl %>%
   shapefile()
 
 ```
