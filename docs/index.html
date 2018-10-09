@@ -73,13 +73,37 @@
   <div class="contents col-md-9">
     <div id="polycheck" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#polycheck" class="anchor"></a>polyCheck <img src="https://avatars1.githubusercontent.com/u/43346405?s=200&amp;v=4" align="right" height="130" width="130">
+<a href="#polycheck" class="anchor"></a>polyCheck <img src="https://avatars1.githubusercontent.com/u/43346405?s=200&amp;v=4" align="right" height="50" width="50">
 </h1></div>
 
 <p>The package <strong>polyCheck</strong> provides functions which can be used to validate delineated polygons created as part of the GRID^3^ project.</p>
 <p>To install the package, you can use:</p>
 <pre><code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">devtools::install_github("GRID3/polyCheck")</a></code></pre>
-<p>Full documentation to be added soon.</p>
+<p>The package is designed to provide a number of diagnostics for polygons. This includes:</p>
+<ul>
+<li>
+<strong>Shapefile fields</strong>: check that the shapefiles contain the right date formats, ID etc.</li>
+<li>
+<strong>Number of polygons per file</strong>: each file should only contain a single shapefile.</li>
+<li>
+<strong>Coordinate reference system</strong>: each file should have a CRS of WGS84.</li>
+<li>
+<strong>Proximity of polygon from survey point</strong>: the survey point should be contained within the polygon. However, it is sometimes not possible to locate sufficient settled area within the local area, and therefore there can be valid exceptions where there is a gap between the two.</li>
+<li>
+<strong>Settled Area Covered</strong>: the polygon should cover between 450 and 550 settlement points.</li>
+<li>
+<strong>Proportion of settlement type matching</strong>: the sample points have been selected to represent a single type of settlement area. The delineated survey area should cover a single area, although having a small percentage of other areas is not a major problem.</li>
+<li>
+<strong>ORNL Overlap</strong>: the survey areas should not overlap areas which have previously been surveyed.</li>
+</ul>
+<p>Additional diagnostics are provided which may also provide indications of polygons which require further inspection:</p>
+<ul>
+<li>
+<strong>Shape Complexity</strong>: the number of sides of the polygon is extracted. Ideally, polygons should follow simple geometric elements but this is not always possible.</li>
+<li>
+<strong>Polsby Popper</strong>: this is a test of compactness comparing the area against the perimeter of the shape. A value of 1 indicates a perfect circle. Ideally, shapes should not be too long and thin as these can be more difficult to survey.</li>
+</ul>
+<p>Additional tools are provided to allow for the visual inspection of polygons.</p>
 </div>
   </div>
 
@@ -95,6 +119,12 @@
 <h2>License</h2>
 <ul class="list-unstyled">
 <li>What license is it under?</li>
+</ul>
+</div>
+<div class="citation">
+<h2>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html">Citing polyCheck</a></li>
 </ul>
 </div>
 <div class="developers">

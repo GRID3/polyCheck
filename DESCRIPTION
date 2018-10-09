@@ -3,6 +3,7 @@ Type: Package
 Title: Verifies delineated polygons for the GRID3 project.
 Version: 0.1.0
 Authors@R: person("Michael", "Harper", email = "michael.harper@flowminder.org", role = c("aut", "cre"))
+YEAR: 2018
 Maintainer: Michael Harper <michael.harper@flowminder.org>
 Description: Runs a series of automated checks on dealineated polygons for the GRID3 project.
 BugReports: https://github.com/GRID3/polyCheck/issues
