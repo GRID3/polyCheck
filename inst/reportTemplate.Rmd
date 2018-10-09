@@ -9,7 +9,7 @@ params:
 title: "Validation of Delineated Polygons"
 subtitle: "`r paste('Polygon ID:', basename(params$filepath))`"
 date: "Last Updated: `r format(Sys.time(), '%d %B, %Y')`"
-output: html_document:default
+output: html_document
 ---
 
 ```{r knitrSetup, include = FALSE}
