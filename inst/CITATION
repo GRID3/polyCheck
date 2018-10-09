@@ -1,0 +1,13 @@
+citHeader("To cite lubridate in publications use:")
+
+citEntry(entry = "Misc",
+  title        = "GRID3 Polygon Delineation Validation",
+  author       = personList(as.person("Michael Harper")),
+  year         = "2018",
+  url          = "https://grid3.github.io/polyCheck/",
+
+  textVersion  =
+  paste("Michael Harper (2018).",
+        "GRID3 Polygon Delineation Validation",
+        "URL https://grid3.github.io/polyCheck/")
+)

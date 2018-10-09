@@ -9,11 +9,7 @@ params:
 title: "Validation of Delineated Polygons"
 subtitle: "`r paste('Polygon ID:', basename(params$filepath))`"
 date: "Last Updated: `r format(Sys.time(), '%d %B, %Y')`"
-output:
-  bookdown::html_document2:
-    toc: TRUE
-    toc_float: TRUE
-    collapsed: FALSE
+output: grid3rmd::html_grid3
 ---
 
 ```{r knitrSetup, include = FALSE}
@@ -97,76 +93,10 @@ dist <- rgeos::gDistance(spgeom1 = shp_m, survey_points_id_m)/1000
 cat("**Note**: it appears that the polygon is not in the same location as the polygon. Make sure that the location is not an error")
 ```
 
-## Number of Points
-
 ```{r}
 # Calculate hte intesection
-points <- intersect(settlements, shp)
+points <- raster::intersect(settlements, shp)
 num_points <- nrow(points)
 ```
 
 We can verify the number of settlement points contained within the polygon. The region covers **`r nrow(points)`**. This value should be between 450 and 550.
-
-### Type of Land Cover
-
-Polygons should primarly include a single type of land cover as specified by the survey points.
-
-```{r}
-# Reformat data to allow assessment
-points_df <- as.data.frame(points)
-
-# Find the land type ID specified in the survey dataframe
-settlement_type <- survey_points_id$type
-
-# Check the delineated polygon matches
-percent_match <- scales::percent(sum(points_df$type == settlement_type)/nrow(points_df))
-
-# Show the match rate
-percent_match
-```
-
-We can verify that the polygon only includes a single type of area. 
-
-```{r settlementPlot, fig.asp=0.2, fig.cap = "Percentage of points by category within the polygon"}
-
-# Plots the results
-ggplot(points_df, aes(x=1, fill = type)) +
-  geom_bar(colour = "black", position = position_stack()) +
-  coord_flip() +
-  theme(axis.text = element_blank(),
-        axis.title = element_blank(),
-        panel.grid = element_blank(),
-        axis.ticks = element_blank())
-
-```
-
-### Complexity
-
-We can check how many sides the polygon has. This represents the complexity:
-
-```{r}
-# A strange way of extracting the number of sides of the polygon
-# https://gis.stackexchange.com/questions/58147/extract-number-of-vertices-in-each-polygon-in-r
-num_sides <- sapply(shp@polygons, function(y) nrow(y@Polygons[[1]]@coords))
-num_sides
-```
-
-```{r}
-area <- raster::area(shp)
-area
-```
-
-## Conflict with ORNL
-
-We also need to make sure that we do not survey the same area twice. We can use the ORNL dataset
-
-```{r}
-# load the ORNL data
-ornl <- "../Kaduna/1_data/ornl_microcensus_clusters/mez_0_6_wgs84.shp" %>%
-  shapefile()
-
-# Calculate the distance to see if they overlap
-check_overlap <- rgeos::gDistance(spgeom1 = ornl, spgeom2 = shp, byid = FALSE) == 0
-```
-
-
