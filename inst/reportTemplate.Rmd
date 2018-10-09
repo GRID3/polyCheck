@@ -1,7 +1,7 @@
 ---
 params:
-  filepath: ".."
-  root_dir: ".."
+  filepath: ""
+  root_dir: ""
   settlement_path: ""
   survey_points: ""
   ornl: ""
@@ -62,7 +62,7 @@ ornl <- patams$ornl %>%
 ```{r loadShapefile}
 shp_path <- params$filepath     # Select the shapefile
 shp_name <- basename(shp_path)  # Extract the name
-shp <- shapefile(x = shp_path)  # Load the shapefile
+shp <- raster::shapefile(x = shp_path)  # Load the shapefile
 shp
 ```
 

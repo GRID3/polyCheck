@@ -25,6 +25,7 @@ create_reports <- function(polygons = polygonName, out_dir = "Reports", input_fi
     # Build the report
     rmarkdown::render(input = input_file,
                       output_file =  output_name,
+                      knit_root_dir = getwd(),
                       output_dir = out_dir,
                       params = list(filepath = polygon),
                       quiet = TRUE)
