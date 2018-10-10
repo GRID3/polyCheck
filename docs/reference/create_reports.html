@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Build a diagnostics summary report — create_reports • polyCheck</title>
+<title>Build a polygon diagnostics report — create_reports • polyCheck</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Build a diagnostics summary report — create_reports" />
+<meta property="og:title" content="Build a polygon diagnostics report — create_reports" />
 
-<meta property="og:description" content="Will create a summary report for each summary report." />
+<meta property="og:description" content="For a specified polygon, this function will generate an HTML summary report providing
+ more detailed diagnostics and an interactive map. If a list of polygon filepaths is
+ provided, a separate report will be built for each." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -84,7 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Basics.html">Basics of using polyCheck</a>
+      <a href="../articles/Basics.html">Basics</a>
+    </li>
+    <li>
+      <a href="../articles/Diagnostic Reports.html">Diagnostic Reports</a>
     </li>
   </ul>
 </li>
@@ -107,14 +112,16 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Build a diagnostics summary report</h1>
+    <h1>Build a polygon diagnostics report</h1>
     
     <div class="hidden name"><code>create_reports.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Will create a summary report for each summary report.</p>
+    <p>For a specified polygon, this function will generate an HTML summary report providing
+ more detailed diagnostics and an interactive map. If a list of polygon filepaths is
+ provided, a separate report will be built for each.</p>
     
     </div>
 
@@ -126,7 +133,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>polygons</th>
-      <td><p>the name of the filepath to the polygon</p></td>
+      <td><p>the name of the filepath to the polygon. Can be supplied a list.</p></td>
     </tr>
     <tr>
       <th>out_dir</th>
@@ -134,13 +141,24 @@
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The full details provided by the report include:</p><ul>
+<li><p>A printout of the shapefile fields</p></li>
+<li><p>An interactive map showing the polygon and corresponding survey point</p></li>
+<li><p>A count of the number of settlement points within the polygon</p></li>
+</ul><p>The function is designed to be used once the settlement data, survey points and ORNL datasets
+ have been loaded.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
     <h2>Author</h2>
     

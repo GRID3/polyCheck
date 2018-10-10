@@ -1,18 +1,129 @@
 ---
-title: "Basics of using polyCheck"
-author: "Michael Harper"
-date: "`r Sys.Date()`"
+title: "Basics"
+date: "`r format(Sys.time(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: "software.bib"
 ---
 
 ```{r setup, include = FALSE}
+# This is not displayed in the vignette
+
+# Set the formatting options
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
+
+knitr::write_bib(c("raster", "leaflet", "polyCheck"), file = "software.bib")
+```
+
+## Setup
+
+The following analysis requires several packages to be loaded:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(raster)
+library(polyCheck)
+library(rgeos)
+```
+
+## Datasets
+
+Within the package, there are a few datasets which are included to represent the dataset which is being validated. These do not represent actual areas surveyed, but were randomly selected for the purpose of explaining and validating the model. The three datasets are as follows:
+
+- **settlement_points_sample_min.shp**: these provide the settlement classifications types.
+- **survey_points_sample.shp**: the locations which have been selected for surveying and require delineation. 
+- **ornl.shp**: the location of previously surveyed areas within the study region.
+
+```{r loadData}
+# Load filepath from repository
+dataPath <- system.file("extdata", package = "polyCheck")
+
+# Settlement types
+settlements <- shapefile(file.path(dataPath, "settlement_points_sample_min.shp"))
+
+# Survey Points
+survey_points <-  shapefile(file.path(dataPath, "survey_points_sample.shp"))
+
+# We must mimic how the FID is generated 
+survey_points$FID <-  0:(nrow(survey_points)-1)
+
+# load the ORNL data
+ornl <- shapefile(file.path(dataPath, "ornl.shp"))
+```
+
+## Polygons to be Validated
+
+A selection of polygons are provided within the `extdata/polygons` subdirectory of the package. These are the objects which we are wishing to validate within the model. Note, these do not represent survey areas and have been designed to highlight the functionality of the package. We can use the function `list_polygons` to list the file paths for polygons. This will by default search within subdirectories in the directory specified, but we can override this by specifying `recursive = FALSE`.
+
+```{r}
+polygons <- list_polygons(dataPath, "polygons")
+basename(polygons)
+```
+
+To check whether any of the delineated polygons conflict, we can merge the polygons into a single shapefile using the `merge_delineated_polygons` function:
+
+```{r}
+polygons_all <- merge_delineated_polygons(polygons)
+polygons_all
+```
+
+
+
+## Diagnosing Polygons
+
+To diagnose polygons, we can use the `assess_polygons` function as shown below:
+
+```{r}
+diagnostics <- 
+  assess_polygons(polygons[1],
+                survey_points,
+                settlement_points,
+                ornl,
+                polygons_all,
+                progress = FALSE)
+```
+
+The full set of parameters is displayed below:
+
+```{r, echo = FALSE}
+
+# Reformat data to display in table
+table <- t(diagnostics) %>%
+  as.data.frame() %>%
+  rownames_to_column()
+
+knitr::kable(table,
+             col.names = c("Parameter", "Value"),
+             format = "html",
+             caption = "Diagnostic Values") %>%
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+The function is designed to work with either a single polygon or a list of polygons. If provided multiple values, the function will return a data.table If we provide it the full set above:
+
+```{r}
+diagnostics <- 
+  assess_polygons(polygons,
+                survey_points,
+                settlement_points,
+                ornl,
+                polygons_all)
+```
+
+The results are presented below:
+
+```{r, echo = FALSE}
+DT::datatable(diagnostics, options = list(autoWidth = TRUE,
+                                    pageLength = 10,
+                                    scrollX = TRUE,
+                                    scrollCollapse = TRUE,
+                                    dom = 't'))
 ```
 

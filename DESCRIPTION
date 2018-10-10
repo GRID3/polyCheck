@@ -14,7 +14,9 @@ URL: https://grid3.github.io/polyCheck/
 Imports:
     raster,
     sp,
-    geosphere
+    geosphere,
+    rgeos,
+    pbapply
 RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown

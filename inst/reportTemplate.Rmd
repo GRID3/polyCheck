@@ -64,7 +64,7 @@ shp
 
 #  Location of Polygon
 
-Figure \@ref(fig:polygonMap) shows the location of the polygon, relative to the survey point. **Note**, you may need to zoom out to view the basemaps as ESRI basemaps are not always available at a fully zoomed level.
+The map below shows the location of the polygon, relative to the survey point. **Note**, you may need to zoom out to view the basemaps as ESRI basemaps are not always available at a fully zoomed level.
 
 ```{r extractPointFromPoly}
 id <- extract_id(shp_path)   # Extract the ID from the file name

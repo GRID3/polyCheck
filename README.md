@@ -10,6 +10,11 @@ To install the package, you can use:
 devtools::install_github("GRID3/polyCheck")
 ```
 
+## User Guide
+
+- [Basics](articles/Basics.html)
+
+
 The package is designed to provide a number of diagnostics for polygons. This includes:
 
 - **Shapefile fields**: check that the shapefiles contain the right date formats, ID etc.

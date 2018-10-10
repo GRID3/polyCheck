@@ -2,18 +2,30 @@
 % Please edit documentation in R/create_reports.R
 \name{create_reports}
 \alias{create_reports}
-\title{Build a diagnostics summary report}
+\title{Build a polygon diagnostics report}
 \usage{
 create_reports(polygons = polygonName, out_dir = "Reports",
   input_file = NULL)
 }
 \arguments{
-\item{polygons}{the name of the filepath to the polygon}
+\item{polygons}{the name of the filepath to the polygon. Can be supplied a list.}
 
 \item{out_dir}{the output directory}
 }
 \description{
-Will create a summary report for each summary report.
+For a specified polygon, this function will generate an HTML summary report providing
+ more detailed diagnostics and an interactive map. If a list of polygon filepaths is
+ provided, a separate report will be built for each.
+}
+\details{
+The full details provided by the report include:
+ \itemize{
+  \item A printout of the shapefile fields
+  \item An interactive map showing the polygon and corresponding survey point
+  \item A count of the number of settlement points within the polygon
+ }
+ The function is designed to be used once the settlement data, survey points and ORNL datasets
+ have been loaded.
 }
 \author{
 Michael Harper

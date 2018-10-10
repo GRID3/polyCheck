@@ -10,14 +10,51 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="author" content="Michael Harper" />
 
-<meta name="date" content="2018-10-09" />
+<meta name="date" content="2018-10-10" />
 
-<title>Basics of using polyCheck</title>
-
+<title>Basics</title>
 
 
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 
 
@@ -30,13 +67,71 @@
 
 
 
-<h1 class="title toc-ignore">Basics of using polyCheck</h1>
-<h4 class="author"><em>Michael Harper</em></h4>
-<h4 class="date"><em>2018-10-09</em></h4>
+<h1 class="title toc-ignore">Basics</h1>
+<h4 class="date"><em>10 October 2018</em></h4>
 
 
 
+<div id="setup" class="section level2">
+<h2>Setup</h2>
+<p>The following analysis requires several packages to be loaded:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<span class="kw">library</span>(raster)
+<span class="kw">library</span>(polyCheck)
+<span class="kw">library</span>(rgeos)</code></pre></div>
+</div>
+<div id="datasets" class="section level2">
+<h2>Datasets</h2>
+<p>Within the package, there are a few datasets which are included to represent the dataset which is being validated. These do not represent actual areas surveyed, but were randomly selected for the purpose of explaining and validating the model. The three datasets are as follows:</p>
+<ul>
+<li><strong>settlement_points_sample_min.shp</strong>: these provide the settlement classifications types.</li>
+<li><strong>survey_points_sample.shp</strong>: the locations which have been selected for surveying and require delineation.</li>
+<li><strong>ornl.shp</strong>: the location of previously surveyed areas within the study region.</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Load filepath from repository</span>
+dataPath &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;polyCheck&quot;</span>)
 
+<span class="co"># Settlement types</span>
+settlements &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(dataPath, <span class="st">&quot;settlement_points_sample_min.shp&quot;</span>))
+
+<span class="co"># Survey Points</span>
+survey_points &lt;-<span class="st">  </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(dataPath, <span class="st">&quot;survey_points_sample.shp&quot;</span>))
+
+<span class="co"># We must mimic how the FID is generated </span>
+survey_points<span class="op">$</span>FID &lt;-<span class="st">  </span><span class="dv">0</span><span class="op">:</span>(<span class="kw">nrow</span>(survey_points)<span class="op">-</span><span class="dv">1</span>)
+
+<span class="co"># load the ORNL data</span>
+ornl &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class="kw">file.path</span>(dataPath, <span class="st">&quot;ornl.shp&quot;</span>))</code></pre></div>
+</div>
+<div id="polygons-to-be-validated" class="section level2">
+<h2>Polygons to be Validated</h2>
+<p>A selection of polygons are provided within the <code>extdata/polygons</code> subdirectory of the package. These are the objects which we are wishing to validate within the model. Note, these do not represent survey areas and have been designed to highlight the functionality of the package. We can use the function <code>list_polygons</code> to list the file paths for polygons. This will by default search within subdirectories in the directory specified, but we can override this by specifying <code>recursive = FALSE</code>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polygons &lt;-<span class="st"> </span><span class="kw">list_polygons</span>(dataPath, <span class="st">&quot;polygons&quot;</span>)
+<span class="kw">basename</span>(polygons)</code></pre></div>
+<p>To check whether any of the delineated polygons conflict, we can merge the polygons into a single shapefile using the <code>merge_delineated_polygons</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polygons_all &lt;-<span class="st"> </span><span class="kw">merge_delineated_polygons</span>(polygons)
+polygons_all</code></pre></div>
+</div>
+<div id="diagnosing-polygons" class="section level2">
+<h2>Diagnosing Polygons</h2>
+<p>To diagnose polygons, we can use the <code>assess_polygons</code> function as shown below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diagnostics &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">assess_polygons</span>(polygons[<span class="dv">1</span>],
+                survey_points,
+                settlement_points,
+                ornl,
+                polygons_all,
+                <span class="dt">progress =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<p>The full set of parameters is displayed below:</p>
+<p>The function is designed to work with either a single polygon or a list of polygons. If provided multiple values, the function will return a data.table If we provide it the full set above:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">diagnostics &lt;-<span class="st"> </span>
+<span class="st">  </span><span class="kw">assess_polygons</span>(polygons,
+                survey_points,
+                settlement_points,
+                ornl,
+                polygons_all)</code></pre></div>
+<p>The results are presented below:</p>
+</div>
 
 
 

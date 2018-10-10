@@ -1,0 +1,158 @@
+---
+subtitle: "Automated Diagnostic Reports"
+date: "Last Updated: `r format(Sys.time(), '%d %B, %Y')`"
+bibliography: "_files/software.bib"
+output:html_document
+params:
+  title: "Lagos Polygon Validation"
+  runAnalysis: FALSE # By default, the analysis will not run when knitting the final report to speed up compiling
+---
+
+```{r setup, include = FALSE}
+
+# Set knitr options
+knitr::opts_chunk$set(message = FALSE,
+                      warning = FALSE,
+                      echo = FALSE)
+
+# Load packages
+library(raster)
+library(sp)
+library(sf)
+library(leaflet)
+library(ggplot2)
+library(rgeos)
+
+# Load polyCheck package used for validation
+devtools::install_github("GRID3/polyCheck", force = TRUE)
+library(polyCheck)
+
+# Create a bibliography for software used
+knitr::write_bib(x = c("rmarkdown", "raster", "leaflet", "polyCheck", "ggplot2", "sp"), file = "_files/software.bib")
+
+# Allow duplicate labels: required to build the reports
+options(knitr.duplicate.label = "allow")
+```
+
+# About
+
+This document provides several automated checks for the validation for delineated polygons. This analysis uses functions from the GRID^3^ package **polyCheck** [@R-polyCheck]. Note, these checks are designed to supplement existing manual checks, and are not intended as a complete replacement for existing procedures.
+
+# Datasets Used
+
+The analysis uses the following datasets:
+
+- **Settlement Point Types**: these provide the settlement classifications types.
+- **Survey Points**: the locations which have been selected for surveying and require delineation.
+- **ORNL polygons**: the location of previously surveyed areas within the study region.
+- **Delineated Polygons**: these are the polygons which have been manually generated.
+
+```{r loadData}
+# Settlement Seed
+settlements <- file.path("../1_data/settlement_point/lagos_settlement_pnts1k_wType.shp") %>%
+  shapefile()
+
+# Survey Points
+survey_points <-  file.path("../1_data/survey_point/lagos_strat_random_140.shp") %>%
+  shapefile()
+
+# Add FID to object
+ survey_points$FID <- 0:(nrow(survey_points)-1)
+
+# Shapes to validate. Should be a directory
+polygons_dir <- "../2_results"
+
+# List all polygons in the file
+polygons <- 
+  list.files(path = polygons_dir, 
+           pattern = "polygon.shp$", 
+           full.names = TRUE,
+           recursive = TRUE)
+
+# load the ORNL data
+ornl <- "../1_data/ornl_microcensus_clusters/mez_0_6_wgs84.shp" %>%
+  shapefile()
+
+```
+
+A list of all the shapefiles within the folder is presented below. In total there are `r length(polygons)` polygons within the directory.
+
+```{r listPolygons, echo = TRUE}
+polygons %>% 
+  basename()
+```
+
+# Diagnostics
+
+We can run a series of checks on the polygons. This includes:
+
+- **Shapefile fields**: check that the shapefiles contain the right date formats, ID etc.
+- **Number of polygons per file**: each file should only contain a single shapefile.
+- **Coordinate reference system**: each file should have a CRS of WGS84.
+- **Proximity of polygon from survey point**: the survey point should be contained within the polygon. However, it is sometimes not possible to locate sufficient settled area within the local area, and therefore there can be valid exceptions where there is a gap between the two.
+- **Settled Area Covered**: the polygon should cover between 450 and 550 settlement points.
+- **Proportion of settlement type matching**: the sample points have been selected to represent a single type of settlement area. The delineated survey area should cover a single area, although having a small percentage of other areas is not a major problem.
+- **ORNL Overlap**: the survey areas should not overlap areas which have previously been surveyed.
+
+Additional diagnostics are provided which may also provide indications of polygons which require further inspection:
+
+- **Shape Complexity**: the number of sides of the polygon is extracted. Ideally, polygons should follow simple geometric elements but this is not always possible.
+- **Polsby Popper**: this is a test of compactness comparing the area against the perimeter of the shape. A value of 1 indicates a perfect circle. Ideally, shapes should not be too long and thin as these can be more difficult to survey.
+
+The checks are run below. The results are shown in the table below. These are also saved to an external file `validationStatsLagos.csv`.
+
+```{r runDiagnostics, eval = params$runAnalysis}
+table <- lapply(polygons,
+                function(x) assess_polygon(x,
+                                           survey_points,
+                                           settlement_points, ornl))
+
+# Merge the results of the above function into a table
+table <- do.call(rbind, table)
+
+# Reformat table to sort by ID
+table <-
+  table %>%
+  dplyr::mutate(Pt_ids = as.numeric(Pt_ids)) %>%
+  dplyr::arrange(Pt_ids)
+
+# Save table as CSV
+write.csv(table, file = "validationStatsLagos.csv")
+```
+
+```{r displayDiagnostics, fig.cap = "Diagnostics Results", out.width="100%"}
+
+# Load the saved data if the analysis is not run. Caching speeds up the report building
+if(!params$runAnalysis) table <- read.csv("validationStatsLagos.csv")
+
+# Display interactive table
+DT::datatable(table, options = list(autoWidth = TRUE,
+                                    pageLength = 10,
+                                    scrollX = TRUE,
+                                    scrollCollapse = TRUE))
+```
+
+The diagnostics can not assess the suitability of polygons, and in particular whether the areas selected are suitable. For example, there may be issues where the extent of the polygon passes through a building. To allow for a more detailed inspection of the results, separate diagnostics files are saved for each polygon. These are stored within the subdirectory `Reports`, and each file has their own HTML report.
+
+```{r buildReports, eval = params$runAnalysis}
+create_reports(polygons = polygons)
+```
+
+--------
+
+# About {-}
+
+This work was undertaken by the Flowminder Foundation and WorldPop at the University of Southampton as part of the the Geo-referenced Infrastructure and Demographic Data for Development (GRID^3^) initiative in Nigeria. GRID^3^ is a multi-country and multi-donor partnership that aims to support collection, storage and application of geospatial data for informed decision-making across target countries. The initiative is funded by the Bill & Melinda Gates Foundation (BMGF) and the United Kingdom’s Department for International Development (DFID). It is implemented by WorldPop/Flowminder (WPFM) and the United Nations Population Fund (UNFPA), and coordinated by the Center for International Earth Science Information Network (CIESIN).
+
+## Metadata {-}
+
+The document was written with **rmarkdown** [@R-rmarkdown]. Spatial analysis was conducted using the **raster** [@R-raster] and **sp** [@R-sp] packages. Data visualisations within the diagnostic reports were produced using **leaflet** [@R-leaflet] and **ggplot2** [@R-ggplot2].
+
+The full session info used to compile the report is provided below:
+
+```{r}
+sessionInfo()
+```
+
+# References
+

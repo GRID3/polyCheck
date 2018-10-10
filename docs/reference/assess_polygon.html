@@ -32,7 +32,9 @@
 
 <meta property="og:title" content="Assess the geometry of a polygon — assess_polygon" />
 
-<meta property="og:description" content="Runs a number of diagnostics on the delineated polygons to check the geometry." />
+<meta property="og:description" content="Runs a number of diagnostics on the delineated polygons to check the geometry.
+ Checks the field parameters, the area of settled area covered and shape complexity.
+ See the details for more information." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -84,7 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Basics.html">Basics of using polyCheck</a>
+      <a href="../articles/Basics.html">Basics</a>
+    </li>
+    <li>
+      <a href="../articles/Diagnostic Reports.html">Diagnostic Reports</a>
     </li>
   </ul>
 </li>
@@ -114,11 +119,14 @@
 
     <div class="ref-description">
     
-    <p>Runs a number of diagnostics on the delineated polygons to check the geometry.</p>
+    <p>Runs a number of diagnostics on the delineated polygons to check the geometry.
+ Checks the field parameters, the area of settled area covered and shape complexity.
+ See the details for more information.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>assess_polygon</span>(<span class='no'>polygon_path</span>, <span class='no'>survey_points</span>, <span class='no'>settlement_points</span>, <span class='no'>ornl</span>)</pre>
+    <pre class="usage"><span class='fu'>assess_polygon</span>(<span class='no'>polygon_path</span>, <span class='no'>survey_points</span>, <span class='no'>settlement_points</span>, <span class='no'>ornl</span>,
+  <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,7 +147,26 @@
       <th>ornl</th>
       <td><p>Optional. A shapefile of the previously surveyed locations</p></td>
     </tr>
+    <tr>
+      <th>progress</th>
+      <td><p>should messages be displayed for the progress through the polygons? Default is TRUE</p></td>
+    </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The full diagnostics checked are as follows:</p><ul>
+<li><p><strong>Shapefile fields</strong>: check that the shapefiles contain the right date formats, ID etc.</p></li>
+<li><p><strong>Number of polygons per file</strong>: each file should only contain a single shapefile.</p></li>
+<li><p><strong>Coordinate reference system</strong>: each file should have a CRS of WGS84.</p></li>
+<li><p><strong>Proximity of polygon from survey point</strong>: the survey point should be contained within the polygon. However, it is sometimes not possible to locate sufficient settled area within the local area, and therefore there can be valid exceptions where there is a gap between the two.</p></li>
+<li><p><strong>Settled Area Covered</strong>: the polygon should cover between 450 and 550 settlement points.</p></li>
+<li><p><strong>Proportion of settlement type matching</strong>: the sample points have been selected to represent a single type of settlement area. The delineated survey area should cover a single area, although having a small percentage of other areas is not a major problem.</p></li>
+<li><p><strong>ORNL Overlap</strong>: the survey areas should not overlap areas which have previously been surveyed.</p></li>
+</ul><p>Additional diagnostics are provided which may also provide indications of polygons which require further inspection:</p><ul>
+<li><p><strong>Shape Complexity</strong>: the number of sides of the polygon is extracted. Ideally, polygons should follow simple geometric elements but this is not always possible.</p></li>
+<li><p><strong>Polsby Popper</strong>: this is a test of compactness comparing the area against the perimeter of the shape. A value of 1 indicates a perfect circle. Ideally, shapes should not be too long and thin as these can be more difficult to survey.</p></li>
+</ul>
     
 
   </div>
@@ -147,7 +174,9 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#details">Details</a></li>
+          </ul>
 
   </div>
 </div>

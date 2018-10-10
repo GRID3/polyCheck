@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- <!DOCTYPE metadata SYSTEM "http://www.esri.com/metadata/esriprof80.dtd"> -->
+<metadata xml:lang="en"><Esri><CreaDate>20181010</CreaDate><CreaTime>10174300</CreaTime><ArcGISFormat>1.0</ArcGISFormat><SyncOnce>TRUE</SyncOnce><DataProperties><lineage><Process ToolSource="c:\program files (x86)\arcgis\desktop10.6\ArcToolbox\Toolboxes\Conversion Tools.tbx\RasterToPoint" Date="20180916" Time="190105">RasterToPoint nga_settlement_v1_1.tif "C:\RESEARCH\2018 GRID3 WorldPop\NGA\gis\ehealth\2018 mez delineation\kaduna_settlement_v1_1.shp" Value</Process><Process ToolSource="c:\program files (x86)\arcgis\desktop10.6\ArcToolbox\Toolboxes\Conversion Tools.tbx\RasterToPoint" Date="20180916" Time="195639">RasterToPoint nga_settlement_v1_1.tif "C:\RESEARCH\2018 GRID3 WorldPop\NGA\gis\ehealth\2018 mez delineation\kaduna_settlement_v1_1.shp" Value</Process></lineage><itemProps><itemLocation><linkage Sync="TRUE">file://\\UOS-216545\C$\RESEARCH\2018 GRID3 WorldPop\NGA\gis\ehealth\2018 mez delineation\kaduna\settlement_point_full\kaduna_settlement_v1_1</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation></itemProps><copyHistory><copy source="C:\RESEARCH\2018 GRID3 WorldPop\NGA\gis\ehealth\2018 mez delineation\gis\settlement points by state\kaduna_settlement_v1_1" dest="\\UOS-216545\C$\RESEARCH\2018 GRID3 WorldPop\NGA\gis\ehealth\2018 mez delineation\kaduna\settlement_point_full\kaduna_settlement_v1_1" date="20180925" time="10595500"></copy></copyHistory></DataProperties></Esri><gmd:GEMINI_Metadata xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gml="http://www.opengis.net/gml" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:msxsl="urn:schemas-microsoft-com:xslt">
+		<gmd:identificationInfo>
+			<gmd:MD_DataIdentification/>
+		</gmd:identificationInfo>
+		<gmd:distributionInfo>
+			<gmd:MD_Distribution>
+				<gmd:transferOptions>
+					<gmd:MD_DigitalTransferOptions>
+						<gmd:onLine>
+							<gmd:CI_OnlineResource>
+								<gmd:linkage>
+									<gmd:URL>\\UOS-216545\C$\RESEARCH\2018 GRID3 WorldPop\NGA\gis\ehealth\2018 mez delineation\gis\settlement points by state\kaduna_settlement_v1_1</gmd:URL>
+								</gmd:linkage>
+							</gmd:CI_OnlineResource>
+						</gmd:onLine>
+					</gmd:MD_DigitalTransferOptions>
+				</gmd:transferOptions>
+			</gmd:MD_Distribution>
+		</gmd:distributionInfo>
+	</gmd:GEMINI_Metadata></metadata>
