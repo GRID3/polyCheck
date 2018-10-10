@@ -1,18 +1,71 @@
 
+#' Assess Multiple Polygons
+#'
+#' A wrapper for the \code{assess_polygon} function to run the function for multiple polygons
+#'
+#' @inheritParams assess_polygon
+#' @export
+#'
+assess_polygons <- function(polygons, survey_points, settlement_points, ornl, merged_polygons = NULL, progress = FALSE){
+
+  # Only display progress bar if plans to exceed 10 seconds
+  pbapply::pboptions(min_time = 5)
+
+  # Run the function
+  table <- pbapply::pblapply(polygons,
+                             function(x) assess_polygon(x,
+                                                        survey_points,
+                                                        settlement_points,
+                                                        ornl,
+                                                        merged_polygons,
+                                                        progress))
+
+  # Merge the results of the above function into a table and reformat
+  table <-
+    do.call(rbind, table) %>%
+    dplyr::mutate(Pt_ids = as.numeric(Pt_ids)) %>%
+    dplyr::arrange(Pt_ids)
+
+  return(table)
+}
+
+
+
+
 #' Assess the geometry of a polygon
 #'
 #' Runs a number of diagnostics on the delineated polygons to check the geometry.
+#'  Checks the field parameters, the area of settled area covered and shape complexity.
+#'  See the details for more information.
+#'
+#' @details The full diagnostics checked are as follows:
+#'  \itemize{
+#'    \item \strong{Shapefile fields}: check that the shapefiles contain the right date formats, ID etc.
+#'    \item \strong{Number of polygons per file}: each file should only contain a single shapefile.
+#'    \item \strong{Coordinate reference system}: each file should have a CRS of WGS84.
+#'    \item \strong{Proximity of polygon from survey point}: the survey point should be contained within the polygon. However, it is sometimes not possible to locate sufficient settled area within the local area, and therefore there can be valid exceptions where there is a gap between the two.
+#'    \item \strong{Settled Area Covered}: the polygon should cover between 450 and 550 settlement points.
+#'    \item \strong{Proportion of settlement type matching}: the sample points have been selected to represent a single type of settlement area. The delineated survey area should cover a single area, although having a small percentage of other areas is not a major problem.
+#'    \item \strong{ORNL Overlap}: the survey areas should not overlap areas which have previously been surveyed.
+#'    }
+#'  Additional diagnostics are provided which may also provide indications of polygons which require further inspection:
+#'  \itemize{
+#'    \item \strong{Shape Complexity}: the number of sides of the polygon is extracted. Ideally, polygons should follow simple geometric elements but this is not always possible.
+#'    \item \strong{Polsby Popper}: this is a test of compactness comparing the area against the perimeter of the shape. A value of 1 indicates a perfect circle. Ideally, shapes should not be too long and thin as these can be more difficult to survey.
+#'  }
 #'
 #' @param polygon_path the relative file path to the polygon shapefile
 #' @param survey_points Optional. The survey points where the delineation should occur
 #' @param settlement_points Optional. The settlement type points layer
 #' @param ornl Optional. A shapefile of the previously surveyed locations
+#' @param merged_polygons Optional. A SpatialPolygonDataFrame of the delineated polygons created from the \code{merge_delineated_polygons} function.
+#' @param progress should messages be displayed for the progress through the polygons? Default is TRUE
 #'
 #' @export
 #'
-assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl){
+assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl, merged_polygons = NULL, progress = TRUE){
 
-  cat("Checking polygon ", polygon_path, "\n")
+  if(progress) cat(" Checking polygon ", basename(polygon_path))
 
   # Add FID to object
   survey_points$FID <- 0:(nrow(survey_points)-1)
@@ -79,6 +132,15 @@ assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl)
   ## Conflict with ORNL
   check_overlap <- !is.null(rgeos::gIntersection(ornl, shp))
 
+
+  # Conflict with other polygons. Optional
+  if(!is.null(merged_polygons)){
+    self_intersect <- polygon_self_intersection(shp, merged_polygons, self_id = id)
+  } else {
+    self_intersect <- "Not Checked"
+  }
+
+
   ## Results
   results <- data.frame(filename = basename(polygon_path),
                         num_features = nrow(shp),
@@ -89,6 +151,7 @@ assess_polygon <- function(polygon_path, survey_points, settlement_points, ornl)
                         dist_from_survey = round(dist, 0),
                         prop_settlement_type = round(percent_match, 2),
                         ornl_overlap = check_overlap,
+                        self_intersect_id = self_intersect,
                         no_sides = num_sides,
                         shp_area = round(area,0),
                         shp_area_hect = round(area_hectare,2),
