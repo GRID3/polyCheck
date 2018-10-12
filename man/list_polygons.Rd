@@ -4,17 +4,21 @@
 \alias{list_polygons}
 \title{List Polygons within a directory}
 \usage{
-list_polygons(..., recursive = TRUE)
+list_polygons(..., recursive = TRUE, sort = FALSE)
 }
 \arguments{
 \item{...}{a list of values to be concatenated into a filepath}
+
+\item{recursive}{should subdirectories be searched? Default is TRUE}
+
+\item{sort}{should the filenames be sorted by ID? Default is FALSE}
 }
 \value{
 a list of polygons
 }
 \description{
-Returns a list of filepaths to shapefiles. This will recursively search any
- subdirectories
+Returns a list of filepaths to shapefiles and optionally sort these by their
+ polygon ID. By default, this will recursively search any subdirectories.
 }
 \examples{
 list_polygons(system.file("extdata", package = "polyCheck"), "polygons")

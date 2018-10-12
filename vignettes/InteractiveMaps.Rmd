@@ -1,0 +1,74 @@
+---
+title: "Interactive Maps"
+author: "Vignette Author"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{InteractiveMaps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+
+# Set the formatting options
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = TRUE,
+  out.width = "100%"
+)
+
+knitr::write_bib(c("raster", "leaflet", "polyCheck"), file = "software.bib")
+```
+
+Interactive maps can be used to visually inspect the polygons. Although there is no way to directly edit the polygon geometry from them, it makes it easy to to quickly assess polygons without the need to load the data into GIS software such as ArcMap.
+
+This tutorial explains how interactive maps can be generated within the **polyCheck** package.
+
+## Setup
+
+The following analysis requires several packages to be loaded:
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(raster)
+library(polyCheck)
+library(rgeos)
+```
+
+## Interactive Maps
+
+As before, we must load the sample data:
+
+```{r}
+# Load Data
+dataPath <- system.file("extdata", package = "polyCheck")
+polygons <- list_polygons(dataPath, "polygons")
+survey_points <-  file.path(dataPath, "survey_points_sample.shp")
+settlement_points <- shapefile(file.path(dataPath, "settlement_points.shp"))
+```
+
+The function `display_polygons` can be used to display the polygon. The map can be used to change the zoom and pan around the map to visually inspect the polygon boundaries. Note, that if the zoom level is too low, the basemap may not be displayed.
+
+```{r}
+# Just displays the polygon
+display_polygon(polygons[2])
+```
+
+The maps can be made more informative by supplying the survey points dataset. The function will automatically find the point which matches the ID of the polygon, and plot both. This is demonstrated below, and helps in identifying whether the polygon is plotted in the right context.
+
+```{r}
+# This is a slight workaround to make the code loop work
+maps <- display_polygon(polygons[3], survey_points)
+htmltools::tagList(maps)
+```
+
+## Generate Maps for all Polygons
+
+```{r}
+# This is a slight workaround to make the code loop work
+maps <- display_polygon(polygons[3], survey_points, settlement_points)
+htmltools::tagList(maps)
+```
+

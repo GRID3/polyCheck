@@ -3,5 +3,5 @@ pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
   Basics: Basics.html
-  Diagnostic Reports: Diagnostic Reports.html
+  InteractiveMaps: InteractiveMaps.html
 

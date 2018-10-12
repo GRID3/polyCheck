@@ -27,10 +27,16 @@ polygon_self_intersection <- function(polygon, all_polygons, self_id){
     overlapping_id <- overlap$ID
     overlapping_id <- paste(overlapping_id, collapse = ', ')
 
+    # Calculate area overlap
+    overlapping_area_prop <- raster::area(overlap)/raster::area(polygon) %>%
+      round(2)
+
   } else{
     overlapping_id <- "No Intersection"
+    overlapping_area_prop <- NA
   }
 
-  return(overlapping_id)
+  return(list(overlap = overlapping_id,
+              prop_overlap = overlapping_area_prop))
 }
 

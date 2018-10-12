@@ -1,0 +1,62 @@
+---
+params:
+  wd:
+    value: !r getwd()
+  region:
+    label: "Region Name"
+    value: Kaduna
+    input: text
+  polyPath:
+    label: "Directory of Polygons"
+    value: "../2_results"
+    input: text
+  survey_points:
+    label: "Survey Points File"
+    value: "../1_data/survey_point/kaduna_strat_random_140.shp"
+    input: file
+title: "`r paste0('Delineated Polygon Maps: ', params$region)`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    theme: flatly
+---
+
+# About
+
+This file provides summary maps of the delineated polygons. Depending on the number of maps displayed, the document may take a while to load all the basemaps. Basemaps are not available at a high zoom level for all regions, and therefore it may be required to zoom out for it to load.
+
+# Map Results
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = FALSE,
+                      message = FALSE,
+                      warning = FALSE)
+
+# Load Packages
+library(polyCheck)
+library(leaflet)
+library(raster)
+
+# Load Data
+polyPath <- params$polyPath
+polygons <- list_polygons(polyPath, sort = TRUE)
+```
+
+```{r, echo=FALSE,include = FALSE}
+# This is a slight workaround to make the code loop work
+maps <- display_polygon(polygons[1], params$survey_points)
+htmltools::tagList(maps)
+```
+x
+```{r, results='asis'}
+
+for(i in polygons){
+    cat("\n \n")
+    cat(sprintf("##%s \n", basename(i)))
+    map <- display_polygon(i, params$survey_points)
+    print(htmltools::tagList(map))
+    cat("\n \n")
+    cat("\n \n")
+}
+```

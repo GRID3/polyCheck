@@ -3,7 +3,7 @@ title: "Basics"
 date: "`r format(Sys.time(), '%d %B %Y')`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Basics}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: "software.bib"
@@ -15,8 +15,7 @@ bibliography: "software.bib"
 # Set the formatting options
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 
 knitr::write_bib(c("raster", "leaflet", "polyCheck"), file = "software.bib")
@@ -46,7 +45,7 @@ Within the package, there are a few datasets which are included to represent the
 dataPath <- system.file("extdata", package = "polyCheck")
 
 # Settlement types
-settlements <- shapefile(file.path(dataPath, "settlement_points_sample_min.shp"))
+settlements <- shapefile(file.path(dataPath, "settlement_points.shp"))
 
 # Survey Points
 survey_points <-  shapefile(file.path(dataPath, "survey_points_sample.shp"))

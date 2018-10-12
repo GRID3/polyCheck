@@ -32,8 +32,8 @@
 
 <meta property="og:title" content="List Polygons within a directory — list_polygons" />
 
-<meta property="og:description" content="Returns a list of filepaths to shapefiles. This will recursively search any
- subdirectories" />
+<meta property="og:description" content="Returns a list of filepaths to shapefiles and optionally sort these by their
+ polygon ID. By default, this will recursively search any subdirectories." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -62,7 +62,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">polyCheck</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@
       <a href="../articles/Basics.html">Basics</a>
     </li>
     <li>
-      <a href="../articles/Diagnostic Reports.html">Diagnostic Reports</a>
+      <a href="../articles/InteractiveMaps.html">Interactive Maps</a>
     </li>
   </ul>
 </li>
@@ -118,12 +118,12 @@
 
     <div class="ref-description">
     
-    <p>Returns a list of filepaths to shapefiles. This will recursively search any
- subdirectories</p>
+    <p>Returns a list of filepaths to shapefiles and optionally sort these by their
+ polygon ID. By default, this will recursively search any subdirectories.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>list_polygons</span>(<span class='no'>...</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>list_polygons</span>(<span class='no'>...</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +131,14 @@
     <tr>
       <th>...</th>
       <td><p>a list of values to be concatenated into a filepath</p></td>
+    </tr>
+    <tr>
+      <th>recursive</th>
+      <td><p>should subdirectories be searched? Default is TRUE</p></td>
+    </tr>
+    <tr>
+      <th>sort</th>
+      <td><p>should the filenames be sorted by ID? Default is FALSE</p></td>
     </tr>
     </table>
     

@@ -2,7 +2,7 @@
 % Please edit documentation in R/assess_polygon.R
 \name{assess_polygon}
 \alias{assess_polygon}
-\title{Assess the geometry of a polygon}
+\title{Assess a single polygon}
 \usage{
 assess_polygon(polygon_path, survey_points, settlement_points, ornl,
   merged_polygons = NULL, progress = TRUE)
@@ -21,24 +21,5 @@ assess_polygon(polygon_path, survey_points, settlement_points, ornl,
 \item{progress}{should messages be displayed for the progress through the polygons? Default is TRUE}
 }
 \description{
-Runs a number of diagnostics on the delineated polygons to check the geometry.
- Checks the field parameters, the area of settled area covered and shape complexity.
- See the details for more information.
-}
-\details{
-The full diagnostics checked are as follows:
- \itemize{
-   \item \strong{Shapefile fields}: check that the shapefiles contain the right date formats, ID etc.
-   \item \strong{Number of polygons per file}: each file should only contain a single shapefile.
-   \item \strong{Coordinate reference system}: each file should have a CRS of WGS84.
-   \item \strong{Proximity of polygon from survey point}: the survey point should be contained within the polygon. However, it is sometimes not possible to locate sufficient settled area within the local area, and therefore there can be valid exceptions where there is a gap between the two.
-   \item \strong{Settled Area Covered}: the polygon should cover between 450 and 550 settlement points.
-   \item \strong{Proportion of settlement type matching}: the sample points have been selected to represent a single type of settlement area. The delineated survey area should cover a single area, although having a small percentage of other areas is not a major problem.
-   \item \strong{ORNL Overlap}: the survey areas should not overlap areas which have previously been surveyed.
-   }
- Additional diagnostics are provided which may also provide indications of polygons which require further inspection:
- \itemize{
-   \item \strong{Shape Complexity}: the number of sides of the polygon is extracted. Ideally, polygons should follow simple geometric elements but this is not always possible.
-   \item \strong{Polsby Popper}: this is a test of compactness comparing the area against the perimeter of the shape. A value of 1 indicates a perfect circle. Ideally, shapes should not be too long and thin as these can be more difficult to survey.
- }
+Internal function that is used
 }

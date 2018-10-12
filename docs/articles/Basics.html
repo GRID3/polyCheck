@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">polyCheck</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -55,7 +55,7 @@
       <a href="../articles/Basics.html">Basics</a>
     </li>
     <li>
-      <a href="../articles/Diagnostic%20Reports.html">Diagnostic Reports</a>
+      <a href="../articles/InteractiveMaps.html">Interactive Maps</a>
     </li>
   </ul>
 </li>
@@ -81,7 +81,7 @@
     <div class="page-header toc-ignore">
       <h1>Basics</h1>
             
-            <h4 class="date">10 October 2018</h4>
+            <h4 class="date">12 October 2018</h4>
       
       
       <div class="hidden name"><code>Basics.Rmd</code></div>
@@ -115,7 +115,7 @@
 dataPath &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"polyCheck"</span>)
 
 <span class="co"># Settlement types</span>
-settlements &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/shapefile">shapefile</a></span>(<span class="kw">file.path</span>(dataPath, <span class="st">"settlement_points_sample_min.shp"</span>))
+settlements &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/shapefile">shapefile</a></span>(<span class="kw">file.path</span>(dataPath, <span class="st">"settlement_points.shp"</span>))
 
 <span class="co"># Survey Points</span>
 survey_points &lt;-<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/raster/topics/shapefile">shapefile</a></span>(<span class="kw">file.path</span>(dataPath, <span class="st">"survey_points_sample.shp"</span>))
@@ -135,6 +135,17 @@ ornl &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumen
 <span class="co">#&gt; [1] "000_js_polygon.shp" "001_js_polygon.shp" "002_mh_polygon.shp"</span>
 <span class="co">#&gt; [4] "003_mh_polygon.shp" "004_dc_polygon.shp" "005_dc_polygon.shp"</span>
 <span class="co">#&gt; [7] "006_ss_polygon.shp" "007_ss_polygon.shp"</span></code></pre></div>
+<p>To check whether any of the delineated polygons conflict, we can merge the polygons into a single shapefile using the <code>merge_delineated_polygons</code> function:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polygons_all &lt;-<span class="st"> </span><span class="kw"><a href="../reference/merge_delineated_polygons.html">merge_delineated_polygons</a></span>(polygons)
+polygons_all
+<span class="co">#&gt; class       : SpatialPolygonsDataFrame </span>
+<span class="co">#&gt; features    : 8 </span>
+<span class="co">#&gt; extent      : 7.670478, 7.745, 11.07066, 11.13065  (xmin, xmax, ymin, ymax)</span>
+<span class="co">#&gt; coord. ref. : +proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0 </span>
+<span class="co">#&gt; variables   : 1</span>
+<span class="co">#&gt; names       : ID </span>
+<span class="co">#&gt; min values  :  0 </span>
+<span class="co">#&gt; max values  :  7</span></code></pre></div>
 </div>
 <div id="diagnosing-polygons" class="section level2">
 <h2 class="hasAnchor">
@@ -145,6 +156,7 @@ ornl &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumen
                 survey_points,
                 settlement_points,
                 ornl,
+                polygons_all,
                 <span class="dt">progress =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <p>The full set of parameters is displayed below:</p>
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -274,6 +286,22 @@ FALSE
 </tr>
 <tr>
 <td style="text-align:left;">
+self_intersect_id
+</td>
+<td style="text-align:left;">
+No Intersection
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+self_intersect_prop
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 no_sides
 </td>
 <td style="text-align:left;">
@@ -319,10 +347,11 @@ perimeter
 <span class="st">  </span><span class="kw"><a href="../reference/assess_polygons.html">assess_polygons</a></span>(polygons,
                 survey_points,
                 settlement_points,
-                ornl)</code></pre></div>
+                ornl,
+                polygons_all)</code></pre></div>
 <p>The results are presented below:</p>
-<div id="htmlwidget-253ed9864624b8f582ec" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-253ed9864624b8f582ec">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8"],["000_js_polygon.shp","001_js_polygon.shp","002_mh_polygon.shp","003_mh_polygon.shp","004_dc_polygon.shp","005_dc_polygon.shp","006_ss_polygon.shp","007_ss_polygon.shp"],[1,1,1,1,1,1,1,1],[1,10,2,3,40,5,6,0],[0,0,0,0,0,0,0,7],[null,null,null,null,null,null,null,null],["10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018"],["31-DEC-2015","31-DEC-2015","31-DEC-2018","31-DEC-2015","25-DEC-2015","12-DEC-2018","25-DEC-2015","25-DEC-2015"],["js","js","mh","mh","dc","dc","ss","ss"],[0,1,2,3,4,5,6,7],[true,true,true,true,true,true,true,true],[542,464,507,554,487,389,551,590],[2135,2103,0,0,0,28,0,0],[0,0,0,0,0,0,0,0],[false,false,false,false,false,false,false,true],[7,14,16,5,18,6,9,9],[31568,38670,29267,32740,30514,22775,32764,52734],[3.16,3.87,2.93,3.27,3.05,2.28,3.28,5.27],[0.72,0.79,0.34,0.78,0.82,0.63,0.8,0.81],[743,783,1039,725,682,673,718,904]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>filename<\/th>\n      <th>num_features<\/th>\n      <th>Id<\/th>\n      <th>Pt_ids<\/th>\n      <th>image_ID<\/th>\n      <th>dig_date<\/th>\n      <th>SRC_DATE2<\/th>\n      <th>digitiser<\/th>\n      <th>id<\/th>\n      <th>crs_match<\/th>\n      <th>no_points<\/th>\n      <th>dist_from_survey<\/th>\n      <th>prop_settlement_type<\/th>\n      <th>ornl_overlap<\/th>\n      <th>no_sides<\/th>\n      <th>shp_area<\/th>\n      <th>shp_area_hect<\/th>\n      <th>Polsby_popper<\/th>\n      <th>perimeter<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":10,"scrollX":true,"scrollCollapse":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,9,11,12,13,15,16,17,18,19]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-c742e2ec0459707652a2" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c742e2ec0459707652a2">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8"],["000_js_polygon.shp","001_js_polygon.shp","002_mh_polygon.shp","003_mh_polygon.shp","004_dc_polygon.shp","005_dc_polygon.shp","006_ss_polygon.shp","007_ss_polygon.shp"],[1,1,1,1,1,1,1,1],[1,10,2,3,40,5,6,0],[0,0,0,0,0,0,0,7],[null,null,null,null,null,null,null,null],["10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018"],["31-DEC-2015","31-DEC-2015","31-DEC-2018","31-DEC-2015","25-DEC-2015","12-DEC-2018","25-DEC-2015","25-DEC-2015"],["js","js","mh","mh","dc","dc","ss","ss"],[0,1,2,3,4,5,6,7],[true,true,true,true,true,true,true,true],[542,464,507,554,487,389,551,590],[2135,2103,0,0,0,28,0,0],[0,0.31,0,1,0.51,1,1,0.34],[false,false,false,false,false,false,false,true],["No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection"],[null,null,null,null,null,null,null,null],[7,14,16,5,18,6,9,9],[31568,38670,29267,32740,30514,22775,32764,52734],[3.16,3.87,2.93,3.27,3.05,2.28,3.28,5.27],[0.72,0.79,0.34,0.78,0.82,0.63,0.8,0.81],[743,783,1039,725,682,673,718,904]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>filename<\/th>\n      <th>num_features<\/th>\n      <th>Id<\/th>\n      <th>Pt_ids<\/th>\n      <th>image_ID<\/th>\n      <th>dig_date<\/th>\n      <th>SRC_DATE2<\/th>\n      <th>digitiser<\/th>\n      <th>id<\/th>\n      <th>crs_match<\/th>\n      <th>no_points<\/th>\n      <th>dist_from_survey<\/th>\n      <th>prop_settlement_type<\/th>\n      <th>ornl_overlap<\/th>\n      <th>self_intersect_id<\/th>\n      <th>self_intersect_prop<\/th>\n      <th>no_sides<\/th>\n      <th>shp_area<\/th>\n      <th>shp_area_hect<\/th>\n      <th>Polsby_popper<\/th>\n      <th>perimeter<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":10,"scrollX":true,"scrollCollapse":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,9,11,12,13,17,18,19,20,21]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
   </div>
 

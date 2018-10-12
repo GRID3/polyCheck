@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Assess the geometry of a polygon — assess_polygon • polyCheck</title>
+<title>Assess a single polygon — assess_polygon • polyCheck</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,11 +30,9 @@
 
 
 
-<meta property="og:title" content="Assess the geometry of a polygon — assess_polygon" />
+<meta property="og:title" content="Assess a single polygon — assess_polygon" />
 
-<meta property="og:description" content="Runs a number of diagnostics on the delineated polygons to check the geometry.
- Checks the field parameters, the area of settled area covered and shape complexity.
- See the details for more information." />
+<meta property="og:description" content="Internal function that is used" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">polyCheck</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
       </span>
     </div>
 
@@ -89,7 +87,7 @@
       <a href="../articles/Basics.html">Basics</a>
     </li>
     <li>
-      <a href="../articles/Diagnostic Reports.html">Diagnostic Reports</a>
+      <a href="../articles/InteractiveMaps.html">Interactive Maps</a>
     </li>
   </ul>
 </li>
@@ -112,21 +110,19 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Assess the geometry of a polygon</h1>
+    <h1>Assess a single polygon</h1>
     
     <div class="hidden name"><code>assess_polygon.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Runs a number of diagnostics on the delineated polygons to check the geometry.
- Checks the field parameters, the area of settled area covered and shape complexity.
- See the details for more information.</p>
+    <p>Internal function that is used</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>assess_polygon</span>(<span class='no'>polygon_path</span>, <span class='no'>survey_points</span>, <span class='no'>settlement_points</span>, <span class='no'>ornl</span>,
-  <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>merged_polygons</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>progress</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -148,25 +144,14 @@
       <td><p>Optional. A shapefile of the previously surveyed locations</p></td>
     </tr>
     <tr>
+      <th>merged_polygons</th>
+      <td><p>Optional. A SpatialPolygonDataFrame of the delineated polygons created from the <code>merge_delineated_polygons</code> function.</p></td>
+    </tr>
+    <tr>
       <th>progress</th>
       <td><p>should messages be displayed for the progress through the polygons? Default is TRUE</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The full diagnostics checked are as follows:</p><ul>
-<li><p><strong>Shapefile fields</strong>: check that the shapefiles contain the right date formats, ID etc.</p></li>
-<li><p><strong>Number of polygons per file</strong>: each file should only contain a single shapefile.</p></li>
-<li><p><strong>Coordinate reference system</strong>: each file should have a CRS of WGS84.</p></li>
-<li><p><strong>Proximity of polygon from survey point</strong>: the survey point should be contained within the polygon. However, it is sometimes not possible to locate sufficient settled area within the local area, and therefore there can be valid exceptions where there is a gap between the two.</p></li>
-<li><p><strong>Settled Area Covered</strong>: the polygon should cover between 450 and 550 settlement points.</p></li>
-<li><p><strong>Proportion of settlement type matching</strong>: the sample points have been selected to represent a single type of settlement area. The delineated survey area should cover a single area, although having a small percentage of other areas is not a major problem.</p></li>
-<li><p><strong>ORNL Overlap</strong>: the survey areas should not overlap areas which have previously been surveyed.</p></li>
-</ul><p>Additional diagnostics are provided which may also provide indications of polygons which require further inspection:</p><ul>
-<li><p><strong>Shape Complexity</strong>: the number of sides of the polygon is extracted. Ideally, polygons should follow simple geometric elements but this is not always possible.</p></li>
-<li><p><strong>Polsby Popper</strong>: this is a test of compactness comparing the area against the perimeter of the shape. A value of 1 indicates a perfect circle. Ideally, shapes should not be too long and thin as these can be more difficult to survey.</p></li>
-</ul>
     
 
   </div>
@@ -174,9 +159,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#details">Details</a></li>
-          </ul>
+                </ul>
 
   </div>
 </div>

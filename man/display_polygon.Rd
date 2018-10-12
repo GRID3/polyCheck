@@ -2,10 +2,21 @@
 % Please edit documentation in R/display_polygon.R
 \name{display_polygon}
 \alias{display_polygon}
-\title{Displays a polygon}
+\title{Displays a delineated polygon in an interactive map}
 \usage{
-display_polygon(filename)
+display_polygon(shp_path, survey_points = NULL,
+  settlement_point = NULL)
+}
+\arguments{
+\item{shp_path}{the filepath of the shapefile}
+
+\item{survey_points_file}{the file path of the survey points}
 }
 \description{
-Displays a polygon
+Creates an interactive map for a dilineated polygon. If the survey points file
+ is specified, it will display the corresponding survey point. Also, it may display
+ the settlement points.
+}
+\author{
+Michael Harper
 }
