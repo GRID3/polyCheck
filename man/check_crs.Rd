@@ -11,7 +11,8 @@ check_crs(input,
 \item{crs_ref}{the CRS to be compared against. Defaults to WGS84}
 }
 \description{
-Will extract the coordinate reference system from a polygon and check that it matches a specified reference.
+Will extract the coordinate reference system from a polygon and check that it
+ matches a specified reference.
 }
 \author{
 Michael Harper

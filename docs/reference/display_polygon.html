@@ -32,9 +32,9 @@
 
 <meta property="og:title" content="Displays a delineated polygon in an interactive map — display_polygon" />
 
-<meta property="og:description" content="Creates an interactive map for a dilineated polygon. If the survey points file
- is specified, it will display the corresponding survey point. Also, it may display
- the settlement points." />
+<meta property="og:description" content="Creates an interactive map for a dilineated polygon. The survey locations and settlement
+ types may optionall be specified, which will be filtered to the relevant area for the
+ polygon." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">polyCheck</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.2.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.1.2</span>
       </span>
     </div>
 
@@ -90,6 +90,9 @@
     </li>
     <li>
       <a href="../articles/InteractiveMaps.html">Interactive Maps</a>
+    </li>
+    <li>
+      <a href="../articles/Reporting.html">Outputting Reports</a>
     </li>
   </ul>
 </li>
@@ -119,9 +122,9 @@
 
     <div class="ref-description">
     
-    <p>Creates an interactive map for a dilineated polygon. If the survey points file
- is specified, it will display the corresponding survey point. Also, it may display
- the settlement points.</p>
+    <p>Creates an interactive map for a dilineated polygon. The survey locations and settlement
+ types may optionall be specified, which will be filtered to the relevant area for the
+ polygon.</p>
     
     </div>
 
@@ -136,18 +139,46 @@
       <td><p>the filepath of the shapefile</p></td>
     </tr>
     <tr>
-      <th>survey_points_file</th>
-      <td><p>the file path of the survey points</p></td>
+      <th>survey_points</th>
+      <td><p>A SpatialPointsDataFrame containing the survey locations</p></td>
+    </tr>
+    <tr>
+      <th>settlement_point</th>
+      <td><p>A SpatialPointsDataFrame containing the settlement type</p></td>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>An HTML map created by the leaflet package.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Note, the shapefiles are specified by a filepath only, while the survey and settlement
+ points must be loaded into the memory. While this may appear inconsistent, it makes
+ it easier to run this function for each individual shapefile when a list of maps is
+ required.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Find file path to example plot</span>
+<span class='no'>poly_path</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata/polygons/001_js_polygon.shp"</span>,
+                         <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"polyCheck"</span>)
+
+<span class='co'># Display the output Map</span>
+<span class='fu'>display_polygon</span>(<span class='no'>poly_path</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

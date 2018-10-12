@@ -14,7 +14,9 @@ polygon_self_intersection(polygon, all_polygons, self_id)
 \item{self_id}{the ID of the polygon being assessed. This makes sure that the polygon excludes this file}
 }
 \description{
-The check calculates whether there is any intersection within the dataset
+This internal function is used to check whether a delineated polygon intersects
+ any other delineated polygons. It will report the polygon it overlaps and the
+ proportion of area which overlaps.
 }
 \seealso{
 merge_delineated_polygons

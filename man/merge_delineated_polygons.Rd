@@ -4,14 +4,27 @@
 \alias{merge_delineated_polygons}
 \title{Merges a list of delineated polygons into a single spatial object}
 \usage{
-merge_delineated_polygons(polygons)
+merge_delineated_polygons(shp_paths, message = TRUE)
 }
 \arguments{
-\item{polygons}{a list of polygons}
+\item{shp_paths}{a list of polygons}
+
+\item{message}{should progress messages be displayed? Default is TRUE}
 }
 \value{
 A SpatialPolygonsDataFrame with the identifier column ID
 }
 \description{
-Merges a list of delineated polygons into a single spatial object
+For a given list of shapefile filepaths, this function will load and combine
+ the shapefiles into a single shapefile object. Each polygon will retain the
+ original attributes assigned to it.
+}
+\examples{
+# Merge the example polygons within the package
+library(polyCheck)
+polygons <- list_polygons(system.file("extdata/polygons", package = "polyCheck"))
+polygons_all <- merge_delineated_polygons(polygons)
+
+# Display the results
+polygons_all
 }

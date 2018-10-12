@@ -1,25 +1,15 @@
 ---
 params:
-  wd:
-    value: !r getwd()
-  region:
-    label: "Region Name"
-    value: Kaduna
-    input: text
-  polyPath:
-    label: "Directory of Polygons"
-    value: "../2_results"
-    input: text
-  survey_points:
-    label: "Survey Points File"
-    value: "../1_data/survey_point/kaduna_strat_random_140.shp"
-    input: file
+  region: Kaduna
+  polyPath: "../2_results"
+  survey_points: "../1_data/survey_point/kaduna_strat_random_140.shp"
 title: "`r paste0('Delineated Polygon Maps: ', params$region)`"
 output:
   html_document:
     toc: true
     toc_float: true
     theme: flatly
+bibliography: "`r system.file('reportTemplates/software.bib', package = 'polyCheck')`"
 ---
 
 # About
@@ -32,6 +22,7 @@ This file provides summary maps of the delineated polygons. Depending on the num
 knitr::opts_chunk$set(echo = FALSE,
                       message = FALSE,
                       warning = FALSE)
+
 
 # Load Packages
 library(polyCheck)
@@ -48,7 +39,7 @@ polygons <- list_polygons(polyPath, sort = TRUE)
 maps <- display_polygon(polygons[1], params$survey_points)
 htmltools::tagList(maps)
 ```
-x
+
 ```{r, results='asis'}
 
 for(i in polygons){
@@ -60,3 +51,12 @@ for(i in polygons){
     cat("\n \n")
 }
 ```
+
+
+-------
+
+# About {-}
+
+This document was produced using **rmarkdown** [@R-rmarkdown] with the maps being displayed using the **leaflet** [@R-leaflet] package. All custom scripts used for the polygon diagnostics are contained within the package **polyCheck** [@R-polyCheck].
+
+# References {-}

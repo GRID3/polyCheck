@@ -10,12 +10,31 @@ display_polygon(shp_path, survey_points = NULL,
 \arguments{
 \item{shp_path}{the filepath of the shapefile}
 
-\item{survey_points_file}{the file path of the survey points}
+\item{survey_points}{A SpatialPointsDataFrame containing the survey locations}
+
+\item{settlement_point}{A SpatialPointsDataFrame containing the settlement type}
+}
+\value{
+An HTML map created by the leaflet package.
 }
 \description{
-Creates an interactive map for a dilineated polygon. If the survey points file
- is specified, it will display the corresponding survey point. Also, it may display
- the settlement points.
+Creates an interactive map for a dilineated polygon. The survey locations and settlement
+ types may optionall be specified, which will be filtered to the relevant area for the
+ polygon.
+}
+\details{
+Note, the shapefiles are specified by a filepath only, while the survey and settlement
+ points must be loaded into the memory. While this may appear inconsistent, it makes
+ it easier to run this function for each individual shapefile when a list of maps is
+ required.
+}
+\examples{
+# Find file path to example plot
+poly_path <- system.file("extdata/polygons/001_js_polygon.shp",
+                         package = "polyCheck")
+
+# Display the output Map
+display_polygon(poly_path)
 }
 \author{
 Michael Harper
