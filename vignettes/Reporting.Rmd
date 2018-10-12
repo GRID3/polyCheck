@@ -1,0 +1,54 @@
+---
+title: "Outputting Reports"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+The package is designed to provide output reports. These can be used within the documentation and validation procedure to evidence the checks made on the polygons. 
+
+# Build Map Reports
+
+A map report can be built for all the polygons being validated. This report will display each polygon with its corresponding point. The function requires several key argments:
+
+1. The directory path of the shapefiles to be validated.
+2. The filepath of the survey locations shapefile.
+3. The output directory of the report. This will default to the current working directory.
+
+This is demonstrated below:
+
+```{r, eval = FALSE}
+# Load Data from the package
+path_data <- system.file("extdata", package = "polyCheck")
+
+# Settlement types
+path_polygons <- file.path(path_data, "polygons")
+path_survey_points <-  file.path(path_data, "survey_points_sample.shp")
+directory <- getwd() # Alter this to your selected directory
+
+# Builds a summary report
+build_map_report(outDir = directory,
+                 survey_points_path = path_survey_points,
+                 polygon_dir = path_polygons)
+```
+
+An example of this report is shown below:
+
+```{r, echo = FALSE}
+knitr::include_graphics("images/mapReport.png", dpi = NA)
+```
+
+
+
+
+
