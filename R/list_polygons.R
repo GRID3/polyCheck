@@ -11,6 +11,7 @@
 #' @return a list of polygons
 #' @author Michael Harper
 #' @export
+#'
 #' @examples
 #' list_polygons(system.file("extdata", package = "polyCheck"), "polygons")
 #'

@@ -1,18 +1,27 @@
 
 #' Displays a delineated polygon in an interactive map
 #'
-#' Creates an interactive map for a dilineated polygon. If the survey points file
-#'  is specified, it will display the corresponding survey point. Also, it may display
-#'  the settlement points.
+#' Creates an interactive map for a dilineated polygon. The survey locations and settlement
+#'  types may optionall be specified, which will be filtered to the relevant area for the
+#'  polygon.
+#'
+#' @details
+#' Note, the shapefiles are specified by a filepath only, while the survey and settlement
+#'  points must be loaded into the memory. While this may appear inconsistent, it makes
+#'  it easier to run this function for each individual shapefile when a list of maps is
+#'  required.
 #'
 #' @param shp_path the filepath of the shapefile
-#' @param survey_points_file the file path of the survey points
-#' @export
-#' @import leaflet
+#' @param survey_points A SpatialPointsDataFrame containing the survey locations
+#' @param settlement_point A SpatialPointsDataFrame containing the settlement type
+#'
+#' @return An HTML map created by the leaflet package.
+#'
 #' @author Michael Harper
-#' @example
-#'  poly_path <- system.file("extdata/polygons/001_js_polygon.shp", package = "polyCheck")
-#'  display_polygon(poly_path)
+#' @import leaflet
+#' @export
+#'
+#' @example R/examples/display_polygon_1.R
 #'
 display_polygon <- function(shp_path, survey_points = NULL, settlement_point = NULL){
 
@@ -24,16 +33,13 @@ display_polygon <- function(shp_path, survey_points = NULL, settlement_point = N
   area <- round(geosphere::areaPolygon(shp)/10000)
   title <- htmltools::strong(basename(shp_path))
   details <- paste("Area (hectare):", area)
-
-  label <- paste(sep = "<br>",
-                 title,
-                 details)
+  label <- paste(sep = "<br>", title, details)
 
   # Create the base leaflet map with no geometry
   map <- leaflet::leaflet()%>%
     leaflet::addControl(label, position = "bottomright")
 
-  # If Settlement points are indicated
+  # Add Settlement points (if specified)
   if(!is.null(settlement_point)){
 
     # Only show the points locally
@@ -43,7 +49,7 @@ display_polygon <- function(shp_path, survey_points = NULL, settlement_point = N
     pal <- leaflet::colorFactor(c("navy", "red", "green", "pink", "orange"),
                                 domain = c("A", "B", "C", "D", "Z"))
 
-    # Add polygon to map. Includes control to be able to turn off layer
+    # Add to map. Includes control to be able to turn off layer
     map <- map %>%
       leaflet::addCircleMarkers(data = points,
                                 radius = 0.4,
@@ -55,12 +61,12 @@ display_polygon <- function(shp_path, survey_points = NULL, settlement_point = N
                                 position = "topright")
   }
 
-  # Plot the polygon only
+  # Add the polygon to the map
   map <- map %>%
     leaflet::addProviderTiles(provider = "Esri.WorldImagery") %>%
     leaflet::addPolygons(data = shp, fillOpacity = 0.1, group = "Polygon")
 
-  # Optionally add survey point
+  # Add survey point to map (if specified)
   if(!is.null(survey_points)){
 
     # Load survey point
@@ -77,8 +83,6 @@ display_polygon <- function(shp_path, survey_points = NULL, settlement_point = N
       leaflet::addMarkers(lng = coords[1], lat = coords[2])
 
   }
-
-
 
   return(map)
 }

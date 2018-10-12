@@ -1,7 +1,9 @@
 
 #' Check whether delineated polygon intersects any other
 #'
-#' The check calculates whether there is any intersection within the dataset
+#' This internal function is used to check whether a delineated polygon intersects
+#'  any other delineated polygons. It will report the polygon it overlaps and the
+#'  proportion of area which overlaps.
 #'
 #' @param polygon the polygon to be checked
 #' @param all_polygons a SpatialPolygonDataFrame as calculated from the \code{merge_delineated_polygons} function
@@ -9,7 +11,6 @@
 #'
 #' @seealso merge_delineated_polygons
 #' @author Michael Harper
-#' @export
 #'
 polygon_self_intersection <- function(polygon, all_polygons, self_id){
 
