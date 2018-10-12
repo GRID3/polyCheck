@@ -11,7 +11,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="date" content="2018-10-11" />
 
 <title>Basics</title>
 
@@ -78,7 +77,6 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 
 <h1 class="title toc-ignore">Basics</h1>
-<h4 class="date"><em>11 October 2018</em></h4>
 
 
 
@@ -123,6 +121,9 @@ ornl &lt;-<span class="st"> </span><span class="kw">shapefile</span>(<span class
 <span class="co">#&gt; [7] &quot;006_ss_polygon.shp&quot; &quot;007_ss_polygon.shp&quot;</span></code></pre></div>
 <p>To check whether any of the delineated polygons conflict, we can merge the polygons into a single shapefile using the <code>merge_delineated_polygons</code> function:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">polygons_all &lt;-<span class="st"> </span><span class="kw">merge_delineated_polygons</span>(polygons)
+<span class="co">#&gt; Loading Polygons</span>
+<span class="co">#&gt; Merging Polygons</span>
+<span class="co">#&gt; Complete</span>
 polygons_all
 <span class="co">#&gt; class       : SpatialPolygonsDataFrame </span>
 <span class="co">#&gt; features    : 8 </span>
@@ -281,6 +282,14 @@ No Intersection
 </tr>
 <tr>
 <td style="text-align:left;">
+self_intersect_prop
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 no_sides
 </td>
 <td style="text-align:left;">
@@ -329,8 +338,8 @@ perimeter
                 ornl,
                 polygons_all)</code></pre></div>
 <p>The results are presented below:</p>
-<div id="htmlwidget-14d22f39ce58ee5ed37a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-14d22f39ce58ee5ed37a">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8"],["000_js_polygon.shp","001_js_polygon.shp","002_mh_polygon.shp","003_mh_polygon.shp","004_dc_polygon.shp","005_dc_polygon.shp","006_ss_polygon.shp","007_ss_polygon.shp"],[1,1,1,1,1,1,1,1],[1,10,2,3,40,5,6,0],[0,0,0,0,0,0,0,7],[null,null,null,null,null,null,null,null],["10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018"],["31-DEC-2015","31-DEC-2015","31-DEC-2018","31-DEC-2015","25-DEC-2015","12-DEC-2018","25-DEC-2015","25-DEC-2015"],["js","js","mh","mh","dc","dc","ss","ss"],[0,1,2,3,4,5,6,7],[true,true,true,true,true,true,true,true],[542,464,507,554,487,389,551,590],[2135,2103,0,0,0,28,0,0],[0,0.31,0,1,0.51,1,1,0.34],[false,false,false,false,false,false,false,true],["No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection"],[7,14,16,5,18,6,9,9],[31568,38670,29267,32740,30514,22775,32764,52734],[3.16,3.87,2.93,3.27,3.05,2.28,3.28,5.27],[0.72,0.79,0.34,0.78,0.82,0.63,0.8,0.81],[743,783,1039,725,682,673,718,904]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>filename<\/th>\n      <th>num_features<\/th>\n      <th>Id<\/th>\n      <th>Pt_ids<\/th>\n      <th>image_ID<\/th>\n      <th>dig_date<\/th>\n      <th>SRC_DATE2<\/th>\n      <th>digitiser<\/th>\n      <th>id<\/th>\n      <th>crs_match<\/th>\n      <th>no_points<\/th>\n      <th>dist_from_survey<\/th>\n      <th>prop_settlement_type<\/th>\n      <th>ornl_overlap<\/th>\n      <th>self_intersect_id<\/th>\n      <th>no_sides<\/th>\n      <th>shp_area<\/th>\n      <th>shp_area_hect<\/th>\n      <th>Polsby_popper<\/th>\n      <th>perimeter<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":10,"scrollX":true,"scrollCollapse":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,9,11,12,13,16,17,18,19,20]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-40f4ab854a19d435b152" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-40f4ab854a19d435b152">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8"],["000_js_polygon.shp","001_js_polygon.shp","002_mh_polygon.shp","003_mh_polygon.shp","004_dc_polygon.shp","005_dc_polygon.shp","006_ss_polygon.shp","007_ss_polygon.shp"],[1,1,1,1,1,1,1,1],[1,10,2,3,40,5,6,0],[0,0,0,0,0,0,0,7],[null,null,null,null,null,null,null,null],["10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018","10-OCT-2018"],["31-DEC-2015","31-DEC-2015","31-DEC-2018","31-DEC-2015","25-DEC-2015","12-DEC-2018","25-DEC-2015","25-DEC-2015"],["js","js","mh","mh","dc","dc","ss","ss"],[0,1,2,3,4,5,6,7],[true,true,true,true,true,true,true,true],[542,464,507,554,487,389,551,590],[2135,2103,0,0,0,28,0,0],[0,0.31,0,1,0.51,1,1,0.34],[false,false,false,false,false,false,false,true],["No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection","No Intersection"],[null,null,null,null,null,null,null,null],[7,14,16,5,18,6,9,9],[31568,38670,29267,32740,30514,22775,32764,52734],[3.16,3.87,2.93,3.27,3.05,2.28,3.28,5.27],[0.72,0.79,0.34,0.78,0.82,0.63,0.8,0.81],[743,783,1039,725,682,673,718,904]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>filename<\/th>\n      <th>num_features<\/th>\n      <th>Id<\/th>\n      <th>Pt_ids<\/th>\n      <th>image_ID<\/th>\n      <th>dig_date<\/th>\n      <th>SRC_DATE2<\/th>\n      <th>digitiser<\/th>\n      <th>id<\/th>\n      <th>crs_match<\/th>\n      <th>no_points<\/th>\n      <th>dist_from_survey<\/th>\n      <th>prop_settlement_type<\/th>\n      <th>ornl_overlap<\/th>\n      <th>self_intersect_id<\/th>\n      <th>self_intersect_prop<\/th>\n      <th>no_sides<\/th>\n      <th>shp_area<\/th>\n      <th>shp_area_hect<\/th>\n      <th>Polsby_popper<\/th>\n      <th>perimeter<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"pageLength":10,"scrollX":true,"scrollCollapse":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,9,11,12,13,17,18,19,20,21]},{"orderable":false,"targets":0}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 
 
