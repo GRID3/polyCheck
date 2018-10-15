@@ -5,13 +5,18 @@
 \title{Validate the CRS of a shapefile}
 \usage{
 check_crs(input,
-  crs_ref = "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0")
+  crs_ref = "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0",
+  warn = TRUE)
 }
 \arguments{
+\item{input}{an object of spatial class.}
+
 \item{crs_ref}{the CRS to be compared against. Defaults to WGS84}
+
+\item{warn}{print a warning message if they do not match. Default is TRUE}
 }
 \description{
-Will extract the coordinate reference system from a polygon and check that it
+Will extract the coordinate reference system from a SpatialObject and check that it
  matches a specified reference.
 }
 \author{

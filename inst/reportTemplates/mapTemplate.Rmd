@@ -12,6 +12,22 @@ output:
 bibliography: "`r system.file('reportTemplates/software.bib', package = 'polyCheck')`"
 ---
 
+```{css echo = FALSE}
+
+pre {
+  max-height: 300px;
+  float: left;
+  width: 910px;
+  overflow-y: auto;
+}
+
+pre.r {
+  max-height: none;
+}
+
+```
+
+
 # About
 
 This file provides summary maps of the delineated polygons. Depending on the number of maps displayed, the document may take a while to load all the basemaps. Basemaps are not available at a high zoom level for all regions, and therefore it may be required to zoom out for it to load.
@@ -58,5 +74,12 @@ for(i in polygons){
 # About {-}
 
 This document was produced using **rmarkdown** [@R-rmarkdown] with the maps being displayed using the **leaflet** [@R-leaflet] package. All custom scripts used for the polygon diagnostics are contained within the package **polyCheck** [@R-polyCheck].
+
+The session info is provided below for reference:
+
+```{r}
+sessionInfo()
+```
+
 
 # References {-}

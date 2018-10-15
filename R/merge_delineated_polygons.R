@@ -14,6 +14,11 @@
 #'
 merge_delineated_polygons <- function(shp_paths, message = TRUE){
 
+  # Check that paths exist
+  for(i in shp_paths){
+    assertthat::assert_that(assertthat::is.readable(i))
+  }
+
   # Load the polygons and merge into single object
   if(message) message("Loading Polygons")
   shp_loaded <- pbapply::pblapply(shp_paths, function(x) raster::shapefile(x = x))

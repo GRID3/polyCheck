@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Validate the CRS of a shapefile — check_crs" />
 
-<meta property="og:description" content="Will extract the coordinate reference system from a polygon and check that it
+<meta property="og:description" content="Will extract the coordinate reference system from a SpatialObject and check that it
  matches a specified reference." />
 <meta name="twitter:card" content="summary" />
 
@@ -121,20 +121,29 @@
 
     <div class="ref-description">
     
-    <p>Will extract the coordinate reference system from a polygon and check that it
+    <p>Will extract the coordinate reference system from a SpatialObject and check that it
  matches a specified reference.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>check_crs</span>(<span class='no'>input</span>,
-  <span class='kw'>crs_ref</span> <span class='kw'>=</span> <span class='st'>"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</span>)</pre>
+  <span class='kw'>crs_ref</span> <span class='kw'>=</span> <span class='st'>"+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"</span>,
+  <span class='kw'>warn</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>input</th>
+      <td><p>an object of spatial class.</p></td>
+    </tr>
+    <tr>
       <th>crs_ref</th>
       <td><p>the CRS to be compared against. Defaults to WGS84</p></td>
+    </tr>
+    <tr>
+      <th>warn</th>
+      <td><p>print a warning message if they do not match. Default is TRUE</p></td>
     </tr>
     </table>
     

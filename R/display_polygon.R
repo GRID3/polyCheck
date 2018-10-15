@@ -22,8 +22,15 @@
 #' @export
 #'
 #' @example R/examples/display_polygon_1.R
+#' @import assertthat
 #'
 display_polygon <- function(shp_path, survey_points = NULL, settlement_point = NULL){
+
+  # Check inputs
+  assertthat::assert_that(has_extension(shp_path, "shp"))
+  assertthat::assert_that(is.readable(shp_path))
+  if(!is.null(survey_points)) assertthat::assert_that(is.spatial(survey_points))
+  if(!is.null(settlement_point)) assertthat::assert_that(is.spatial(settlement_point))
 
   # Load the shapefile
   shp <- raster::shapefile(x = shp_path)
@@ -70,12 +77,12 @@ display_polygon <- function(shp_path, survey_points = NULL, settlement_point = N
   if(!is.null(survey_points)){
 
     # Load survey point
-    survey_points_data <- shapefile(survey_points)
-    survey_points_data$FID <- 0:(nrow(survey_points_data)-1) # Add FID to object
+    survey_points_id <- survey_points
+    survey_points_id$FID <- 0:(nrow(survey_points_id)-1) # Add FID to object
 
     # Find the coordinate ID which matches
     id <- extract_id(shp_path)   # Extract the ID from the file name
-    survey_points_id <- survey_points_data[survey_points_data$FID == id,]
+    survey_points_id <- survey_points_id[survey_points_id$FID == id,]
     coords <- coordinates(survey_points_id)
 
     # Add markers to map

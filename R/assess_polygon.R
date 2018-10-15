@@ -56,7 +56,10 @@ assess_polygons <- function(polygons, survey_points, settlement_points, ornl, me
 
 #' Assess a single polygon
 #'
-#' Internal function that is used
+#' Internal function that is used to diagnose a single Polygon. Please use the
+#'  \code{\link{assess_polygons}} function which is designed to use this function
+#'  across a list of polygons.
+#'
 #' @param polygon_path the relative file path to the polygon shapefile
 #' @param survey_points Optional. The survey points where the delineation should occur
 #' @param settlement_points Optional. The settlement type points layer

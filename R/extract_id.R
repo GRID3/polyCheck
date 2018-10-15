@@ -15,8 +15,12 @@
 #'
 extract_id <- function(filepath){
 
+  # Make sure input is character
+  assertthat::assert_that(is.character(filepath),
+              msg = paste0(deparse(substitute(filepath)), " is not a character vector"))
+
   id <- basename(filepath) %>%
-    stringr::str_extract(pattern = "[:digit:]{3}") %>%
+    stringr::str_extract(pattern = "[:digit:]{1,3}") %>%
     as.numeric()
 
   return(id)

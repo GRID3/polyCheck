@@ -21,5 +21,7 @@ assess_polygon(polygon_path, survey_points, settlement_points, ornl,
 \item{progress}{should messages be displayed for the progress through the polygons? Default is TRUE}
 }
 \description{
-Internal function that is used
+Internal function that is used to diagnose a single Polygon. Please use the
+ \code{\link{assess_polygons}} function which is designed to use this function
+ across a list of polygons.
 }
