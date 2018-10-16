@@ -1,13 +1,11 @@
 ---
 output: github_document
 ---
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(out.width = "100%")
 ```
-
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # polyCheck <img src="https://avatars1.githubusercontent.com/u/43346405?s=200&v=4" align="right" height="50" width="50" />
 
@@ -36,6 +34,7 @@ To see how to use the package check out the vignettes:
 
 - [Basics](articles/Basics.html)
 - [Interactive Maps](articles/InteractiveMaps.html)
+- [Reporting](articles/Reporting.html)
 
 ## Quick Examples
 
@@ -48,5 +47,6 @@ display_polygon(poly_path)
 ```
 
 
+## Reporting Issues
 
-
+The code is under development. If you experience any issues, please file a bug report on the [GitHub issues](https://github.com/GRID3/polyCheck/issues).
